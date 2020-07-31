@@ -1,0 +1,42 @@
+name: 更新内容
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+           #  ┌───────────── minute (0 - 59)
+           #  │ ┌───────────── hour (0 - 23)
+           #  │ │ ┌───────────── day of the month (1 - 31)
+           #  │ │ │ ┌───────────── month (1 - 12 )
+           #  │ │ │ │ ┌───────────── day of the week (0 - 6 )
+           #  │ │ │ │ │
+           #  │ │ │ │ │
+           #  │ │ │ │ │
+           #  * * * * *
+    - cron:  '1 * * * *'
+
+jobs:
+
+  rss:
+
+    runs-on: ubuntu-20.04 
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: install ssh key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          known_hosts: github.com
+      - name: clone data
+        env:
+          GIT_DATA: ${{ secrets.GIT_DATA }}
+          GIT_NAME: ${{ secrets.GIT_NAME }}
+          GIT_MAIL: ${{ secrets.GIT_MAIL }}
+        run: |
+          ./sh/install.sh
+      - run: ./rss.sh

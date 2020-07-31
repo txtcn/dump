@@ -1,0 +1,15 @@
+[style]
+based_on_style=pep8
+column_limit=70
+continuation_align_style=SPACE
+continuation_indent_width=2
+dedent_closing_brackets=True
+each_dict_entry_on_separate_line=True
+force_multiline_dict=False
+indent_blank_lines=False
+indent_width=2
+join_multiple_lines=True
+space_between_ending_comma_and_closing_bracket=True
+spaces_before_comment=2
+split_before_closing_bracket=True
+split_before_dict_set_generator=True

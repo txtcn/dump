@@ -1,0 +1,3 @@
+#!/usr/bin/env sh 
+
+eval "exec node -r 'coffeescript/register' -r 'module-alias/register' $@"

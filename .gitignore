@@ -1,0 +1,6 @@
+/data/
+config/self.yml
+
+*.log
+nohup.out
+node_modules/

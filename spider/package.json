@@ -1,0 +1,9 @@
+{
+  "name": "spider",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "await-spawn": "^3.0.0",
+    "he": "^1.2.0"
+  }
+}

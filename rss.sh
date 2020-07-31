@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+_DIR=$(cd "$(dirname "$0")"; pwd)
+cd $_DIR
+
+if [ ! \( -e "./node_modules" \) ]; then
+npx yarn
+fi
+
+direnv exec . ./rss.coffee
+
+cd data
+
+git add .
+git commit -m'U'
+git push
+
