@@ -43,11 +43,15 @@ module.exports = =>
         output
         id+"_"+name.replace(":","：")+"_"+author+".txt"
       )
+      console.log url
       console.log output
-      await pipeline(
-        got.stream(url),
-        fs.createWriteStream(output)
-      )
+      try
+        await pipeline(
+          got.stream(url),
+          fs.createWriteStream(output)
+        )
+      catch err
+        console.error err
     DB.set(end, page)
 
 if not module.parent then do =>
