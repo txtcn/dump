@@ -15,7 +15,12 @@ module.exports = =>
   for page in [end_page...0]
     console.log page
     url = "http://wap.bookshuku.com/txt/0_0_0_0_default_0_#{page}.html"
-    ex = await req.ex url
+    while 1
+      try
+        ex = await req.ex url
+        break
+      catch err
+        console.err err
     li = ex.li '<a href="http://wap.bookshuku.com/bookinfo/{}.html">'
     for i in li
       fs.appendFileSync(
