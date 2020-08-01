@@ -12,9 +12,9 @@ DB = yml_db DIRPATH
 module.exports = =>
   end = 'end'
   end_page = DB.get(end) or 2846
-  for i in [end_page...0]
-    console.log i
-    url = "http://wap.bookshuku.com/txt/0_0_0_0_default_0_#{i}.html"
+  for page in [end_page...0]
+    console.log page
+    url = "http://wap.bookshuku.com/txt/0_0_0_0_default_0_#{page}.html"
     ex = await req.ex url
     li = ex.li '<a href="http://wap.bookshuku.com/bookinfo/{}.html">'
     for i in li
@@ -23,7 +23,7 @@ module.exports = =>
         "http://txt.bookshuku.com/home/down/txt/id/"+i+"\n"
       )
 
-    DB.set(end, i)
+    DB.set(end, page)
 
 if not module.parent then do =>
   await module.exports()
