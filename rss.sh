@@ -10,7 +10,7 @@ npx yarn
 fi
 
 direnv exec . ./rss.coffee
-
+direnv exec . ./spider/mt.sohu.com.coffee
 cd data
 
 git add .
