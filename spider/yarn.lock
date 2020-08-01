@@ -26,6 +26,11 @@ inherits@^2.0.3:
   resolved "https://registry.npm.taobao.org/inherits/download/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha1-D6LGT5MpF8NDOg3tVTY6rjdBa3w=
 
+node-wget-promise@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.npm.taobao.org/node-wget-promise/download/node-wget-promise-0.1.6.tgz#d62c61d77aea6d3a084cad38602163de23a0f67d"
+  integrity sha1-1ixh13rqbToITK04YCFj3iOg9n0=
+
 readable-stream@^3.0.1:
   version "3.6.0"
   resolved "https://registry.npm.taobao.org/readable-stream/download/readable-stream-3.6.0.tgz#337bbda3adc0706bd3e024426a286d4b4b2c9198"
