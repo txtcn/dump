@@ -1,5 +1,20 @@
 class Extract
   constructor: (@html) ->
+  li:(tpl)->
+    html = @html
+    [begin,end] = tpl.split("{}",2)
+    r = []
+    pre = 0
+    while 1
+      bp = html.indexOf(begin, pre)
+      if bp >= 0
+        ep = html.indexOf(end,bp+begin.length)
+        if ep >= 0
+          r.push html[bp+begin.length...ep].trim()
+          pre = ep+1
+          continue
+      break
+    return r
 
   one:(tpl)->
     html = @html
