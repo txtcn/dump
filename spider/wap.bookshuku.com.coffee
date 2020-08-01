@@ -20,7 +20,7 @@ module.exports = =>
         ex = await req.ex url
         break
       catch err
-        console.err err
+        console.error err
     li = ex.li '<a href="http://wap.bookshuku.com/bookinfo/{}.html">'
     for i in li
       fs.appendFileSync(
