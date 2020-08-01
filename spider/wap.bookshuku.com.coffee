@@ -33,7 +33,7 @@ module.exports = =>
       [name, author] = name.split("</b>")
       author = author.split(">").pop()
       kind = kind.split("[").pop().split("]")[0]
-      url = "http://txt.bookshuku.com/home/down/txt/id/"+i
+      url = "http://txt.bookshuku.com/home/down/txt/id/"+id
       output = path.join(
         DIRPATH
         kind
