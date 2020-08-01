@@ -1,10 +1,14 @@
 #!/usr/bin/env coffee
 fs = require 'fs-extra'
+stream = require('stream')
+got = require('got')
+{promisify} = require('util')
 req = require '@/lib/req'
 path = require 'path'
 yml_db = require '@/lib/yml_db'
 {PATH} = require '@/config'
-wget = require('node-wget-promise')
+
+pipeline = promisify stream.pipeline
 
 DIRPATH = path.join(PATH.BOOK,path.basename(__filename[..-8]))
 
@@ -30,19 +34,20 @@ module.exports = =>
       author = author.split(">").pop()
       kind = kind.split("[").pop().split("]")[0]
       url = "http://txt.bookshuku.com/home/down/txt/id/"+i
-      await wget(
-        url
-        output:path.join(
-          DIRPATH
-          kind
-          name.replace(":","：")+"_"+author
-        )
+      output = path.join(
+        DIRPATH
+        kind
       )
-      console.log kind, name, author
-      # fs.appendFileSync(
-      #   DIRPATH+".txt"
-      # )
-      #
+      await fs.mkdirs(output)
+      output = path.join(
+        output
+        id+"_"+name.replace(":","：")+"_"+author+".txt"
+      )
+      console.log output
+      await pipeline(
+        got.stream(url),
+        fs.createWriteStream(output)
+      )
     DB.set(end, page)
 
 if not module.parent then do =>

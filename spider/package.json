@@ -4,7 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "await-spawn": "^3.0.0",
-    "he": "^1.2.0",
-    "node-wget-promise": "^0.1.6"
+    "got": "^11.5.1",
+    "he": "^1.2.0"
   }
 }
