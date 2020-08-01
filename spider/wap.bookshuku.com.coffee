@@ -5,7 +5,7 @@ path = require 'path'
 yml_db = require '@/lib/yml_db'
 {PATH} = require '@/config'
 
-DIRPATH = path.join(PATH.DATA,path.basename(__filename[..-8]))
+DIRPATH = path.join(PATH.BOOK,path.basename(__filename[..-8]))
 
 DB = yml_db DIRPATH
 
