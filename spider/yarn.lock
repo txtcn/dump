@@ -180,11 +180,6 @@ mimic-response@^3.1.0:
   resolved "https://registry.npm.taobao.org/mimic-response/download/mimic-response-3.1.0.tgz#2d1d59af9c1b129815accc2c46a022a5ce1fa3c9"
   integrity sha1-LR1Zr5wbEpgVrMwsRqAipc4fo8k=
 
-minimist@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.npm.taobao.org/minimist/download/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
-  integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
-
 normalize-url@^4.1.0:
   version "4.5.0"
   resolved "https://registry.npm.taobao.org/normalize-url/download/normalize-url-4.5.0.tgz#453354087e6ca96957bd8f5baf753f5982142129"
@@ -248,23 +243,10 @@ string_decoder@^1.1.1:
   dependencies:
     safe-buffer "~5.2.0"
 
-tunnel@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.npm.taobao.org/tunnel/download/tunnel-0.0.6.tgz#72f1314b34a5b192db012324df2cc587ca47f92c"
-  integrity sha1-cvExSzSlsZLbASMk3yzFh8pH+Sw=
-
 util-deprecate@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/util-deprecate/download/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
-
-wget-improved@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.npm.taobao.org/wget-improved/download/wget-improved-3.2.0.tgz#c9ec2e916bda46fa26306c8282311e3c96802747"
-  integrity sha1-yewukWvaRvomMGyCgjEePJaAJ0c=
-  dependencies:
-    minimist "1.2.0"
-    tunnel "0.0.6"
 
 wrappy@1:
   version "1.0.2"
