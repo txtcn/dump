@@ -4,7 +4,6 @@
   "main": "index.js",
   "dependencies": {
     "await-spawn": "^3.0.0",
-    "got": "^11.5.1",
     "he": "^1.2.0"
   }
 }

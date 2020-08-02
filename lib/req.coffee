@@ -38,6 +38,18 @@ class Req
   get : -> @_lock =>
     axios.get(...arguments)
 
+  wget: (url, filepath)-> @_lock =>
+    r = await axios.get {
+      url
+      responseType: "stream"
+    }
+    new Promise(
+      (resolve,reject)=>
+        r.pipe fs.createWriteStream(filepath)
+        writer.on('error',reject)
+        writer.on('close',resolve)
+    )
+
 
   _next : ->
     --@n

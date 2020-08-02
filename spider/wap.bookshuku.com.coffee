@@ -1,14 +1,12 @@
 #!/usr/bin/env coffee
 fs = require 'fs-extra'
 stream = require('stream')
-got = require('got')
 {promisify} = require('util')
 req = require '@/lib/req'
 path = require 'path'
 yml_db = require '@/lib/yml_db'
 {PATH} = require '@/config'
 
-pipeline = promisify stream.pipeline
 
 DIRPATH = path.join(PATH.BOOK,path.basename(__filename[..-8]))
 
@@ -46,10 +44,7 @@ module.exports = =>
       console.log url
       console.log output
       try
-        await pipeline(
-          got.stream(url),
-          fs.createWriteStream(output)
-        )
+        await req.wget(url, output)
       catch err
         console.error err
     DB.set(end, page)
