@@ -8,7 +8,7 @@ path = require 'path'
 yml_db = require '@/lib/yml_db'
 {PATH} = require '@/config'
 
-req = new Req(3,1000)
+req = new Req(5,1000)
 
 DIRPATH = path.join(PATH.BOOK,path.basename(__filename[..-8]))
 
