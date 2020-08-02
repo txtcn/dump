@@ -28,7 +28,6 @@ module.exports = =>
         console.error err
     li = ex.li '<a href="http://wap.bookshuku.com/bookinfo/{}</a>'
     todo = []
-
     for i in li
       [id, name] = i.split('.html">')
       [kind, name] = name.split("<b>")
@@ -48,12 +47,12 @@ module.exports = =>
       console.log url
       console.log output
       todo.push req.wget(url, output)
-
     for i in todo
       try
-        await i
+        await Promise.all(todo)
       catch err
-        console.error chalk.redBright err.response.status + " " + err.response.statusText
+        console.error err # chalk.redBright err.response.status + " " + err.response.statusText
+
     DB.set(end, page)
 
 if not module.parent then do =>
