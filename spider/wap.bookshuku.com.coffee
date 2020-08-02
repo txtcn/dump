@@ -44,11 +44,7 @@ module.exports = =>
       )
       console.log url
       console.log output
-      todo.push req.wget(url, output)
-    try
-      await Promise.all(todo)
-    catch err
-      console.error err
+      await req.wget(url, output)
     DB.set(end, page)
 
 if not module.parent then do =>
