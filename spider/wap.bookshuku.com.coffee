@@ -25,6 +25,7 @@ module.exports = =>
       catch err
         console.error err
     li = ex.li '<a href="http://wap.bookshuku.com/bookinfo/{}</a>'
+    todo = []
     for i in li
       [id, name] = i.split('.html">')
       [kind, name] = name.split("<b>")
@@ -43,10 +44,11 @@ module.exports = =>
       )
       console.log url
       console.log output
-      try
-        await req.wget(url, output)
-      catch err
-        console.error err
+      todo.push req.wget(url, output)
+    try
+      await Promise.all(todo)
+    catch err
+      console.error err
     DB.set(end, page)
 
 if not module.parent then do =>

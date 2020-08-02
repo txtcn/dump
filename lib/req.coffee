@@ -1,5 +1,5 @@
 #!/usr/bin/env coffee
-
+fs = require 'fs-extra'
 axios = require './axios'
 jq = require './jq'
 sleep = require 'await-sleep'
@@ -45,9 +45,10 @@ class Req
     }
     new Promise(
       (resolve,reject)=>
-        r.pipe fs.createWriteStream(filepath)
+        writer = fs.createWriteStream(filepath)
         writer.on('error',reject)
         writer.on('close',resolve)
+        r.pipe writer
     )
 
 
