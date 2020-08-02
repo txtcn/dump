@@ -3,11 +3,12 @@ fs = require 'fs-extra'
 stream = require('stream')
 chalk = require 'chalk'
 {promisify} = require('util')
-req = require '@/lib/req'
+{Req} = require '@/lib/req'
 path = require 'path'
 yml_db = require '@/lib/yml_db'
 {PATH} = require '@/config'
 
+req = new Req(3,1000)
 
 DIRPATH = path.join(PATH.BOOK,path.basename(__filename[..-8]))
 
@@ -27,6 +28,7 @@ module.exports = =>
         console.error err
     li = ex.li '<a href="http://wap.bookshuku.com/bookinfo/{}</a>'
     todo = []
+
     for i in li
       [id, name] = i.split('.html">')
       [kind, name] = name.split("<b>")
@@ -45,8 +47,11 @@ module.exports = =>
       )
       console.log url
       console.log output
+      todo.push req.wget(url, output)
+
+    for i in todo
       try
-        await req.wget(url, output)
+        await i
       catch err
         console.error chalk.redBright err.response.status + " " + err.response.statusText
     DB.set(end, page)
