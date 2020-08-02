@@ -1,6 +1,7 @@
 #!/usr/bin/env coffee
 fs = require 'fs-extra'
 stream = require('stream')
+chalk = require 'chalk'
 {promisify} = require('util')
 req = require '@/lib/req'
 path = require 'path'
@@ -44,7 +45,10 @@ module.exports = =>
       )
       console.log url
       console.log output
-      await req.wget(url, output)
+      try
+        await req.wget(url, output)
+      catch err
+        console.error chalk.redBright err.response.status + " " + err.response.statusText
     DB.set(end, page)
 
 if not module.parent then do =>
