@@ -3,12 +3,11 @@ fs = require 'fs-extra'
 stream = require('stream')
 chalk = require 'chalk'
 {promisify} = require('util')
-{Req} = require '@/lib/req'
+req = require '@/lib/req'
 path = require 'path'
 yml_db = require '@/lib/yml_db'
 {PATH} = require '@/config'
 
-req = new Req(3,1000)
 
 DIRPATH = path.join(PATH.BOOK,path.basename(__filename[..-8]))
 
@@ -46,12 +45,10 @@ module.exports = =>
       )
       console.log url
       console.log output
-      todo.push req.wget(url, output)
-    for i in todo
       try
-        await Promise.all(todo)
+        await req.wget(url, output)
       catch err
-        console.error err # chalk.redBright err.response.status + " " + err.response.statusText
+        console.error chalk.redBright err.response.status + " " + err.response.statusText
 
     DB.set(end, page)
 
