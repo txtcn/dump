@@ -25,6 +25,7 @@ class Req
     @pre = now + Math.max(diff,0)
     if diff > 0
       await sleep diff
+    # console.log chalk.gray("并发 "+@n+"/"+@max)
     if @n < @max
       ++ @n
       try
