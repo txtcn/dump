@@ -1,7 +1,7 @@
 /book/
 /data/
 config/self.yml
-
+*.lock
 *.log
 nohup.out
 node_modules/
