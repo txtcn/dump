@@ -13,16 +13,19 @@ fetch = (now)=>
   {result} = await req.get url
   day = parseInt(now/86400)
   if result.length
+    todo = []
     for i in result
-      {timestamp,title,link} = i.contents
-      console.log title,chalk.gray(link)
-      ex = await req.ex(link)
-      html = ex.one('<article class="article-with-html"{}</article>')
-      if html
-        pos = html.indexOf(">")+1
-        html = html[pos..]
-        if not out.add(title,link,timestamp,html)
-          process.exit()
+      todo.push do =>
+        {timestamp,title,link} = i.contents
+        console.log title,chalk.gray(link)
+        ex = await req.ex(link)
+        html = ex.one('<article class="article-with-html"{}</article>')
+        if html
+          pos = html.indexOf(">")+1
+          html = html[pos..]
+          if not out.add(title,link,timestamp,html)
+            process.exit()
+    await Promise.all(todo)
     {timestamp} = result.pop().contents
     if day != parseInt timestamp/86400
       await out.done()
