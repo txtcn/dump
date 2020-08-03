@@ -23,6 +23,10 @@ class _Out
     @_reset()
 
   add:(title, url, time, text)->
+    day = parseInt(time/86400)
+    if not (day of @day)
+      fpath = path.join(@dirpath, day)
+      load_path(fpath).map((x)=>@add(...x))
     if @exist.has(url)
       return
     @exist.add(url)
@@ -35,15 +39,12 @@ class _Out
         i.trim().replace(/\t/g,' ').replace(RE_ARROW, ARROW2)
     )
     t.push time
-    day = parseInt(time/86400)
     @day[day] = li = @day[day] or []
     li.push t
+    return true
 
   done:->
     for day,li of @day
-      fpath = path.join(@dirpath, day)
-      load_path(fpath).map((x)=>@add(...x))
-
       li.sort (a,b)=>a[3]-b[3]
       txt = []
       day_sec = 86400*day

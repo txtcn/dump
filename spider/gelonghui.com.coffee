@@ -20,7 +20,8 @@ fetch = (now)=>
       if html
         pos = html.indexOf(">")+1
         html = html[pos..]
-        out.add(title,link,timestamp,html)
+        if not out.add(title,link,timestamp,html)
+          process.exit()
     {timestamp} = result.pop().contents
     if day != parseInt timestamp/86400
       await out.done()
