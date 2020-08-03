@@ -3,6 +3,7 @@
 Out = require '@/txtcn/out'
 req = require '@/lib/req'
 path = require 'path'
+chalk = require 'chalk'
 {PATH} = require '@/config'
 DIRPATH = path.join(PATH.DATA,path.basename(__filename[..-8]))
 out = Out(DIRPATH)
@@ -14,7 +15,7 @@ fetch = (now)=>
   if result.length
     for i in result
       {timestamp,title,link} = i.contents
-      console.log title,link
+      console.log title,chalk.gray(link)
       ex = await req.ex(link)
       html = ex.one('<article class="article-with-html"{}</article>')
       if html

@@ -25,8 +25,7 @@ class _Out
   add:(title, url, time, text)->
     day = parseInt(time/86400)
     if not (day of @day)
-      fpath = path.join(@dirpath, ""+day)
-      load_path(fpath).map((x)=>@add(...x))
+      load_path(@_path day).map((x)=>@add(...x))
     if @exist.has(url)
       return
     @exist.add(url)
@@ -42,6 +41,9 @@ class _Out
     @day[day] = li = @day[day] or []
     li.push t
     return true
+
+  _path:(day)->
+    path.join(@dirpath, ""+day)
 
   done:->
     for day,li of @day
@@ -59,7 +61,7 @@ class _Out
             if i
               t.push i
           txt.push(t.join("\n"))
-      fs.outputFileSync fpath,txt.join('\n')
+      fs.outputFileSync @_path(day),txt.join('\n')
     @_reset()
 
   _reset:->
