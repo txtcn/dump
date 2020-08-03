@@ -9,8 +9,12 @@ if [ ! \( -e "./node_modules" \) ]; then
 npx yarn
 fi
 
-direnv exec . ./rss.coffee
-direnv exec . ./spider/mt.sohu.com.coffee
+direnv exec . ./rss.coffee &
+direnv exec . ./spider/mt.sohu.com.coffee &
+direnv exec . ./spider/gelonghui.com.coffee &
+
+wait
+
 cd data
 
 git add .
