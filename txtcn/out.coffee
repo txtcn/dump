@@ -25,6 +25,7 @@ class _Out
   add:(title, url, time, text)->
     day = parseInt(time/86400)
     if not (day of @day)
+      @day[day] = []
       load_path(@_path day).map((x)=>@add(...x))
     if @exist.has(url)
       return
@@ -38,8 +39,7 @@ class _Out
         i.trim().replace(/\t/g,' ').replace(RE_ARROW, ARROW2)
     )
     t.push time
-    @day[day] = li = @day[day] or []
-    li.push t
+    @day[day].push t
     return true
 
   _path:(day)->
