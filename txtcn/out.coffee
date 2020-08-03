@@ -25,7 +25,7 @@ class _Out
   add:(title, url, time, text)->
     day = parseInt(time/86400)
     if not (day of @day)
-      fpath = path.join(@dirpath, day)
+      fpath = path.join(@dirpath, ""+day)
       load_path(fpath).map((x)=>@add(...x))
     if @exist.has(url)
       return
