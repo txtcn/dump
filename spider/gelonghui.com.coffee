@@ -23,9 +23,11 @@ fetch = (now)=>
         if html
           pos = html.indexOf(">")+1
           html = html[pos..]
-          if not out.add(title,link,timestamp,html)
-            process.exit()
-    await Promise.all(todo)
+          return out.add(title,link,timestamp,html)
+    for i in await Promise.all(todo)
+      if i
+        await out.done()
+        process.exit()
     {timestamp} = result.pop().contents
     if day != parseInt timestamp/86400
       await out.done()

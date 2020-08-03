@@ -28,7 +28,7 @@ class _Out
       @day[day] = []
       load_path(@_path day).map((x)=>@add(...x))
     if @exist.has(url)
-      return
+      return true
     @exist.add(url)
     t = [
       title.replace(/\n/g," ")
@@ -40,7 +40,7 @@ class _Out
     )
     t.push time
     @day[day].push t
-    return true
+    return
 
   _path:(day)->
     path.join(@dirpath, ""+day)
