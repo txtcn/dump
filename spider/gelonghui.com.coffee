@@ -10,6 +10,7 @@ out = Out(DIRPATH)
 fetch = (now)=>
   url = "https://www.gelonghui.com/api/channels/web_home_page/articles/v4?timestamp=#{now}&loaded=0"
   {result} = await req.get url
+  day = parseInt(now/86400)
   if result.length
     for i in result
       {timestamp,title,link} = i.contents
@@ -20,7 +21,10 @@ fetch = (now)=>
         pos = html.indexOf(">")+1
         html = html[pos..]
         out.add(title,link,timestamp,html)
-    return result.pop().contents.timestamp
+    {timestamp} = result.pop().contents
+    if day != parseInt timestamp/86400
+      await out.done()
+    return timestamp
 
 
 module.exports = =>
@@ -34,6 +38,7 @@ module.exports = =>
     if not t or t >= now
       break
     now = t - 1
+  await out.done()
 
 if not module.parent then do =>
   await module.exports()
