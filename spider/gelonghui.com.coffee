@@ -25,7 +25,6 @@ fetch = (now)=>
           html = html[pos..]
           return out.add(title,link,timestamp,html)
     for i in await Promise.all(todo)
-      continue
       if i == true
         await out.done()
         process.exit()
