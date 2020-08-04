@@ -15,8 +15,8 @@ fetch = (now)=>
   if result.length
     todo = []
     for i in result
+      {timestamp,title,link} = i.contents
       todo.push do =>
-        {timestamp,title,link} = i.contents
         console.log title,chalk.gray(link)
         ex = await req.ex(link)
         html = ex.one('<article class="article-with-html"{}</article>')
@@ -25,12 +25,15 @@ fetch = (now)=>
           html = html[pos..]
           return out.add(title,link,timestamp,html)
     for i in await Promise.all(todo)
+      continue
       if i == true
         await out.done()
         process.exit()
     {timestamp} = result.pop().contents
     if day != parseInt timestamp/86400
       await out.done()
+      global.gc()
+      console.log(chalk.green((process.memoryUsage().heapUsed/1024/1024).toFixed(2)))
     return timestamp
 
 
