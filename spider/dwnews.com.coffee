@@ -61,6 +61,7 @@ zone = (id)=>
       continue
     offset = await dump(r)
     if offset
+      # offset = "?limit=9999&offset="+offset
       offset = "?offset="+offset
     else
       break
