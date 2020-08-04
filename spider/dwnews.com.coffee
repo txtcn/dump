@@ -66,7 +66,7 @@ zone = (id)=>
       break
 
 module.exports = =>
-  for id in [10000118,10000117,10000120,10000119,10000123]
+  for id in [10000117,10000118,10000119,10000120,10000123]
     await zone(id)
   await out.done()
 
