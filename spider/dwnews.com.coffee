@@ -12,8 +12,10 @@ dump = ({nextOffset,items})=>
   for {id,type,data} in items
     if type==1
         post_url = "http://dwnews.com/-/"+id
-        {title} = data
+        {title, publishTime,publishUrl} = data
         console.log title, post_url
+        console.log publishTime
+        await req.ex(publishUrl)
 
   return nextOffset
 #   day = parseInt(now/86400)
