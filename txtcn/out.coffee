@@ -34,10 +34,9 @@ class _Out
       title.replace(/\n/g," ")
       text
       url.trim().replace(/\n/g," ").replace(/ /g,'+')
-    ].map(
-      (i)=>
-        i.trim().replace(/\t/g,' ').replace(RE_ARROW, ARROW2)
-    )
+    ]
+    for i,_ in t
+      t[_] = i.trim().replace(/\t/g,' ').replace(RE_ARROW, ARROW2)
     t.push time
     @day[day].push t
     return
