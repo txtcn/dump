@@ -55,11 +55,14 @@ class _Out
   done:->
     exist = @exist
     for day,li of @day
-      li.sort (a,b)=>exist[a][2]-exist[b][2]
+      post_li = []
+      for url in li
+        post_li.push [url].concat(exist[url])
+
+      post_li.sort (a,b)=>a[3]-b[3]
       txt = []
       day_sec = 86400*day
-      for url in li
-        [title,text,time]=exist[url]
+      for [url,title,text,time] in post_li
         txt.push ARROW+(opencc.convert(title))
         txt.push [url,time-day_sec].join("\t")
         if text
