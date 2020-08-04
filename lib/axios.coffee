@@ -50,9 +50,9 @@ module.exports = {
             throw err
           # if ERR_IGNORE.has(code)
           #   msg = chalk.redBright(code)
-          continue
         else
           console.error err
+        continue
       finally
         clearTimeout timer
       if not r?.data

@@ -25,6 +25,7 @@ fetch = (now)=>
           html = html[pos..]
           return out.add(title,link,timestamp,html)
     for i in await Promise.all(todo)
+      # continue
       if i == true
         await out.done()
         process.exit()
@@ -32,13 +33,14 @@ fetch = (now)=>
     if day != parseInt timestamp/86400
       await out.done()
       # global.gc()
-      console.log new Date(timestamp*1000)
+      console.log new Date(timestamp*1000), timestamp
       console.log("内存占用",chalk.green((process.memoryUsage().heapUsed/1024/1024).toFixed(2)))
     return timestamp
 
 
 module.exports = =>
   now = parseInt(new Date()/1000)
+  # now = 1588118400
   while 1
     try
       t = await fetch(now)
