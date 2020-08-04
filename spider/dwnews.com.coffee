@@ -15,7 +15,14 @@ dump = ({nextOffset,items})=>
         {title, publishTime,publishUrl} = data
         console.log title, post_url
         console.log publishTime
-        await req.ex(publishUrl)
+        ex = await req.ex(publishUrl)
+        html = ex.one("<article {}</article>")
+        if html
+          pos = html.indexOf(">")+1
+          html = html[pos..]
+          if true == out.add(title,post_url,publishTime,html)
+            return
+  await out.done()
 
   return nextOffset
 #   day = parseInt(now/86400)
@@ -55,7 +62,10 @@ zone = (id)=>
       console.log err
       continue
     offset = await dump(r)
-    offset = "?offset="+offset
+    if offset
+      offset = "?offset="+offset
+    else
+      break
 
 module.exports = =>
   for id in [10000118,10000117,10000120,10000119,10000123]
