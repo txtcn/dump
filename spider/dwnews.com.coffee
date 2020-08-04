@@ -8,54 +8,47 @@ chalk = require 'chalk'
 DIRPATH = path.join(PATH.DATA,path.basename(__filename[..-8]))
 out = Out(DIRPATH)
 
+dump_post = (id, data) =>
+  post_url = "http://dwnews.com/-/"+id
+  {title, publishTime,publishUrl} = data
+  console.log title, post_url
+  ex = await req.ex(encodeURI publishUrl)
+  html = ex.one("<article {}</article>")
+  if html
+    pos = html.indexOf(">")+1
+    html = html[pos..]
+    pos = html.indexOf('href="/tag')
+    if pos > 0
+      pos2 = html.lastIndexOf("</div>", pos)
+      while 1
+        html = html[...pos]
+        pos = html.lastIndexOf("<div", pos)
+        if pos2 >= pos
+          break
+    html = html.replace('<div class="view-tracker"></div>','')
+    return out.add(title,post_url,publishTime,html)
+
+
 dump = ({nextOffset,items})=>
+  todo = []
   for {id,type,data} in items
     if type==1
-        post_url = "http://dwnews.com/-/"+id
-        {title, publishTime,publishUrl} = data
-        console.log title, post_url
-        console.log publishTime
-        ex = await req.ex(publishUrl)
-        html = ex.one("<article {}</article>")
-        if html
-          pos = html.indexOf(">")+1
-          html = html[pos..]
-          if true == out.add(title,post_url,publishTime,html)
-            return
+      todo.push await dump_post(id, data)
+
+  for i in await Promise.all(todo)
+    if true == i
+      return
+
   await out.done()
 
   return nextOffset
-#   day = parseInt(now/86400)
-#   if result.length
-#     todo = []
-#     for i in result
-#       {timestamp,title,link} = i.contents
-#       todo.push do =>
-#         # console.log title,chalk.gray(link)
-#         ex = await req.ex(link)
-#         html = ex.one('<article class="article-with-html"{}</article>')
-#         if html
-#           pos = html.indexOf(">")+1
-#           html = html[pos..]
-#           return out.add(title,link,timestamp,html)
-#     for i in await Promise.all(todo)
-#       if i == true
-#         await out.done()
-#         process.exit()
-#     {timestamp} = result.pop().contents
-#     if day != parseInt timestamp/86400
-#       await out.done()
-#       # global.gc()
-#       console.log new Date(timestamp*1000)
-#       console.log("内存占用",chalk.green((process.memoryUsage().heapUsed/1024/1024).toFixed(2)))
-#     return timestamp
-#
 
 zone = (id)=>
   _url = "https://prod-site-api.dwnews.com/v2/feed/zone/"+id
   offset = ""
   while 1
     url = _url + offset
+    console.log chalk.gray(url)
     try
       r = await req.get url
     catch err
