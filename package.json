@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "axios-retry": "^3.1.8",
     "chalk": "^4.1.0",
+    "chinese-s2t": "^1.0.0",
     "coffeescript": "^2.5.1",
     "feedme": "^1.2.0",
     "fs-extra": "^9.0.1",
@@ -19,9 +20,7 @@
     "klaw": "^3.0.0",
     "lodash": "^4.17.19",
     "module-alias": "^2.2.2",
-    "opencc": "^1.1.1",
     "threads": "^1.6.3",
-    "wasm-opencc": "^1.0.2",
     "zstd-codec": "^0.1.2"
   }
 }

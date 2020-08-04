@@ -3,11 +3,13 @@
 path = require 'path'
 fs = require 'fs-extra'
 load = require '@/txtcn/load'
-{ DictSource, Converter } = require('wasm-opencc')
-dictSource = new DictSource('t2s.json')
-opencc = undefined
-dictSource.get().then (args)=>
-  opencc = new Converter(...args)
+{t2s} = require 'chinese-s2t'
+
+# { DictSource, Converter } = require('wasm-opencc')
+# dictSource = new DictSource('t2s.json')
+# opencc = undefined
+# dictSource.get().then (args)=>
+#   opencc = new Converter(...args)
 
 
 DAY_SEC = 86400
@@ -63,10 +65,10 @@ class _Out
       txt = []
       day_sec = 86400*day
       for [url,title,text,time] in post_li
-        txt.push ARROW+(opencc.convert(title))
+        txt.push ARROW+(t2s(title))
         txt.push [url,time-day_sec].join("\t")
         if text
-          text = opencc.convert(text)
+          text = t2s(text)
           t = []
           for i in text.split("\n")
             i = i.trim()
