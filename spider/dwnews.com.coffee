@@ -8,9 +8,7 @@ chalk = require 'chalk'
 DIRPATH = path.join(PATH.DATA,path.basename(__filename[..-8]))
 out = Out(DIRPATH)
 
-fetch = (now)=>
-  console.log url
-  {nextOffset,items} = await req.get url
+dump = ({nextOffset,items})=>
   for {id,type,data} in items
     if type==1
         post_url = "http://dwnews.com/-/"+id
@@ -44,17 +42,22 @@ fetch = (now)=>
 #     return timestamp
 #
 
-module.exports = =>
-  _url = "https://prod-site-api.dwnews.com/v2/feed/zone/0"
+zone = (id)=>
+  _url = "https://prod-site-api.dwnews.com/v2/feed/zone/"+id
   offset = ""
   while 1
     url = _url + offset
     try
-      offset = await fetch(url)
+      r = await req.get url
     catch err
       console.log err
       continue
+    offset = await dump(r)
     offset = "?offset="+offset
+
+module.exports = =>
+  for id in [10000118,10000117,10000120,10000119,10000123]
+    await zone(id)
   await out.done()
 
 if not module.parent then do =>
