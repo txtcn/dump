@@ -25,7 +25,12 @@ dump_post = (id, data) =>
         pos = html.lastIndexOf("<div", pos)
         if pos2 >= pos
           break
-    html = html.replace('<div class="view-tracker"></div>','')
+    html = html.replace(/<div class\=\"view-tracker\"><\/div>/g,'')
+    html = html.replace(/<span class\=\"view\-tracker\-inline\"><\/span>/g,'')
+    html = html.replace(/<a[^>]+class\=\"[^"]*\bhbsase\b[^"]*\".*<\/a>/g,'')
+    html = html.replace(/ class\=\"[^"]*\"/g,'')
+    html = html.replace(/ style\=\"[^"]*\"/g,'')
+    html = html.replace(/ style\=\"[^"]*\"/g,'')
     return out.add(title,post_url,publishTime,html)
 
 
