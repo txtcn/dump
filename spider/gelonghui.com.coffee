@@ -32,8 +32,8 @@ fetch = (now)=>
     {timestamp} = result.pop().contents
     if day != parseInt timestamp/86400
       await out.done()
-      # global.gc()
       console.log new Date(timestamp*1000), timestamp
+      # global.gc()
       console.log("内存占用",chalk.green((process.memoryUsage().heapUsed/1024/1024).toFixed(2)))
     return timestamp
 

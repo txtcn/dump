@@ -21,6 +21,7 @@
     "module-alias": "^2.2.2",
     "opencc": "^1.1.1",
     "threads": "^1.6.3",
+    "wasm-opencc": "^1.0.2",
     "zstd-codec": "^0.1.2"
   }
 }

@@ -29,7 +29,7 @@ module.exports = =>
     url = "https://post.smzdm.com/json_more/?tab_id=zuixin&filterUrl=zuixin&p=#{++page}"
     {data} = await req.get(url)
     todo = []
-    pre_day = 0
+    preday = 0
     if data.length
       for {title,time_sort,article_url} in data
         todo.push dump title,article_url,time_sort
@@ -37,7 +37,11 @@ module.exports = =>
       for i in await Promise.all todo
         if i == true
           return
-      await out.done()
+      if day != preday
+        await out.done()
+        preday = day
+      # global.gc()
+      # console.log("内存占用",chalk.green((process.memoryUsage().heapUsed/1024/1024).toFixed(2)))
     else
       break
 

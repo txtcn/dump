@@ -3,7 +3,12 @@
 path = require 'path'
 fs = require 'fs-extra'
 load = require '@/txtcn/load'
-opencc = new (require('opencc'))('t2s.json')
+{ DictSource, Converter } = require('wasm-opencc')
+dictSource = new DictSource('t2s.json')
+opencc = undefined
+dictSource.get().then (args)=>
+  opencc = new Converter(...args)
+
 
 DAY_SEC = 86400
 ARROW = "➜"
@@ -18,6 +23,9 @@ load_path = (fpath)=>
     )
   return []
 
+format = (i)=>
+  i.trim().replace(/\t/g,' ').replace(RE_ARROW, ARROW2)
+
 class _Out
   constructor: (@dirpath)->
     @_reset()
@@ -26,34 +34,36 @@ class _Out
     day = parseInt(time/86400)
     if not (day of @day)
       @day[day] = []
-      load_path(@_path day).map((x)=>@add(...x))
-    if @exist.has(url)
-      return true
-    @exist.add(url)
+      for i in load_path(@_path day)
+        @add(...i)
+    url = format url.trim().replace(/\n/g," ").replace(/ /g,'+')
+    is_exist =  url of @exist
     t = [
       title.replace(/\n/g," ")
       text
-      url.trim().replace(/\n/g," ").replace(/ /g,'+')
     ]
     for i,_ in t
       t[_] = i.trim().replace(/\t/g,' ').replace(RE_ARROW, ARROW2)
     t.push time
-    @day[day].push t
-    return
+    @exist[url] = t
+    @day[day].push url
+    return is_exist
 
   _path:(day)->
     path.join(@dirpath, ""+day)
 
   done:->
+    exist = @exist
     for day,li of @day
-      li.sort (a,b)=>a[3]-b[3]
+      li.sort (a,b)=>exist[a][2]-exist[b][2]
       txt = []
       day_sec = 86400*day
-      for [title,text,url,time] in li
-        txt.push ARROW+(await opencc.convertPromise(title))
+      for url in li
+        [title,text,time]=exist[url]
+        txt.push ARROW+(opencc.convert(title))
         txt.push [url,time-day_sec].join("\t")
         if text
-          text = await opencc.convertPromise(text)
+          text = opencc.convert(text)
           t = []
           for i in text.split("\n")
             i = i.trim()
@@ -65,7 +75,7 @@ class _Out
 
   _reset:->
     @day = {}
-    @exist = new Set()
+    @exist = {}
 
 module.exports = -> new _Out(...arguments)
 
