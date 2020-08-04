@@ -34,12 +34,10 @@ module.exports = =>
       for {title,time_sort,article_url} in data
         todo.push dump title,article_url,time_sort
         day = parseInt time_sort/86400
-        if day != pre_day
-          pre_day = day
-          await out.done()
       for i in await Promise.all todo
         if i == true
           return
+      await out.done()
     else
       break
 
