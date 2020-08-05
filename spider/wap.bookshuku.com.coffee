@@ -48,7 +48,10 @@ module.exports = =>
       try
         await req.wget(url, output)
       catch err
-        console.error chalk.redBright err.response.status + " " + err.response.statusText
+        if err.response
+          console.error chalk.redBright err.response.status + " " + err.response.statusText
+        else
+          console.error err
 
     DB.set(end, page)
 
