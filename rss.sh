@@ -14,7 +14,6 @@ direnv exec . ./spider/mt.sohu.com.coffee &
 direnv exec . ./spider/gelonghui.com.coffee &
 direnv exec . ./spider/dwnews.com.coffee &
 direnv exec . ./spider/smzdm.com.coffee &
-
 wait
 
 cd data
