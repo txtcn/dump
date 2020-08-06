@@ -32,12 +32,15 @@ class _Out
   constructor: (@dirpath)->
     @_reset()
 
-  add:(title, url, time, text)->
-    day = parseInt(time/86400)
+  load:(day)->
     if not (day of @day)
       @day[day] = []
       for i in load_path(@_path day)
         @add(...i)
+
+  add:(title, url, time, text)->
+    day = parseInt(time/86400)
+    @load(day)
     url = format url.trim().replace(/\n/g," ").replace(/ /g,'+')
     is_exist =  url of @exist
     t = [
