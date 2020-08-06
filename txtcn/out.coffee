@@ -48,7 +48,8 @@ class _Out
       t[_] = i.trim().replace(/\t/g,' ').replace(RE_ARROW, ARROW2)
     t.push time
     @exist[url] = t
-    @day[day].push url
+    if not is_exist
+      @day[day].push url
     return is_exist
 
   _path:(day)->
