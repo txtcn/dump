@@ -25,25 +25,26 @@ dump = (title, url, time)=>
 
 module.exports = =>
   page = 0
+
+  preday = undefined
+
   while true
+    console.log page
     url = "https://post.smzdm.com/json_more/?tab_id=zuixin&filterUrl=zuixin&p=#{++page}"
     {data} = await req.get(url)
     todo = []
-    preday = 0
-    if data.length
-      for {title,time_sort,article_url} in data
-        todo.push dump title,article_url,time_sort
-        day = parseInt time_sort/86400
-      for i in await Promise.all todo
-        if i == true
-          return
-      if day != preday
-        await out.done()
-        preday = day
-      # global.gc()
-      # console.log("内存占用",chalk.green((process.memoryUsage().heapUsed/1024/1024).toFixed(2)))
-    else
-      break
+    if not data.length
+      return
+    for {title,time_sort,article_url} in data
+      todo.push dump title,article_url,time_sort
+      day = parseInt time_sort/86400
+    if (await Promise.all todo).every (i)=>i==true
+      return
+    if day != preday
+      await out.done()
+      preday = day
+      global.gc()
+      console.log("内存占用",chalk.green((process.memoryUsage().heapUsed/1024/1024).toFixed(2)))
 
 if not module.parent then do =>
   await module.exports()
