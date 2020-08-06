@@ -1,6 +1,6 @@
 #!/usr/bin/env coffee
 
-split_n = require '@/util/split_n'
+split_n = require '../util/split_n'
 
 module.exports = (day,txt)=>
   day = parseInt(day)

@@ -2,7 +2,7 @@
 
 path = require 'path'
 fs = require 'fs-extra'
-load = require '@/txtcn/load'
+load = require './load'
 {t2s} = require 'chinese-s2t'
 
 # { DictSource, Converter } = require('wasm-opencc')
