@@ -5,7 +5,7 @@ rl = readline.createInterface({
     output: process.stdout
 })
 
-module.exports = (msg)=>
+module.exports = (msg='')=>
   new Promise (resolve)=>
-    rl.question msg or '', resolve
+    rl.question msg, resolve
 
