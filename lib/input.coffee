@@ -7,5 +7,5 @@ rl = readline.createInterface({
 
 module.exports = (msg)=>
   new Promise (resolve)=>
-    rl.question msg, resolve
+    rl.question msg or '', resolve
 
